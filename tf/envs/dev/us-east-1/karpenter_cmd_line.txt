@@ -1,0 +1,134 @@
+# # Launching AMD64 Instances
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter apply -f deployment_amd64.yaml                                                                                         12:35:28 AM
+deployment.apps/nginx-amd64 created
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter get all                                                                                                                12:35:30 AM
+NAME                               READY   STATUS              RESTARTS   AGE
+pod/karpenter-766999d6f6-bxstr     1/1     Running             0          4m32s
+pod/karpenter-766999d6f6-xqn2f     1/1     Running             0          4m32s
+pod/nginx-amd64-575f654c4c-2bl6h   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-2fbn4   0/1     Pending             0          87s
+pod/nginx-amd64-575f654c4c-4vfbq   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-55pht   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-564b8   0/1     Pending             0          87s
+pod/nginx-amd64-575f654c4c-5lscj   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-5swrj   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-67ws7   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-754s8   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-75zmz   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-7b6kr   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-7cjmn   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-7rrmk   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-8s6mx   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-8tvsm   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-8wm8f   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-9dft9   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-9dmfn   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-cgxt9   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-clf68   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-csk2h   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-d89q4   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-djgx8   0/1     Pending             0          87s
+pod/nginx-amd64-575f654c4c-djltg   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-dwftl   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-fcf7v   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-hlcf9   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-hwk77   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-j2stg   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-jcwhr   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-l8ljs   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-mfjwb   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-mmksd   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-p6pmg   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-pkk24   0/1     Pending             0          87s
+pod/nginx-amd64-575f654c4c-qscpb   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-r2p4q   0/1     ContainerCreating   0          89s
+pod/nginx-amd64-575f654c4c-r6f7n   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-rqmjz   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-s89f5   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-swjf4   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-swk8k   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-tr2mg   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-tz7ps   1/1     Running             0          88s
+pod/nginx-amd64-575f654c4c-vgvc5   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-wjddt   0/1     ContainerCreating   0          88s
+pod/nginx-amd64-575f654c4c-wq5h2   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-xdqhk   1/1     Running             0          89s
+pod/nginx-amd64-575f654c4c-xfnxg   0/1     Pending             0          88s
+pod/nginx-amd64-575f654c4c-z5hp2   1/1     Running             0          89s
+
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/karpenter   ClusterIP   10.100.62.218   <none>        8000/TCP   4h10m
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/karpenter     2/2     2            2           4h9m
+deployment.apps/nginx-amd64   37/50   50           37          89s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/karpenter-744d54bdc7     0         0         0       4h10m
+replicaset.apps/karpenter-766999d6f6     2         2         2       4m33s
+replicaset.apps/nginx-amd64-575f654c4c   50        50        37      90s
+
+
+
+# Validation
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl get nodes                                                                                                                           12:37:42 AM
+NAME                            STATUS   ROLES    AGE     VERSION
+ip-172-31-21-230.ec2.internal   Ready    <none>   65s     v1.30.2-eks-1552ad0
+ip-172-31-22-176.ec2.internal   Ready    <none>   81s     v1.30.2-eks-1552ad0
+ip-172-31-25-153.ec2.internal   Ready    <none>   3h24m   v1.30.2-eks-1552ad0
+ip-172-31-40-118.ec2.internal   Ready    <none>   3h24m   v1.30.2-eks-1552ad0
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl describe node ip-172-31-21-230.ec2.internal | grep arch                                                                             12:37:58 AM
+Labels:             beta.kubernetes.io/arch=amd64
+                    kubernetes.io/arch=amd64
+
+# Launching ARM64 Instances
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter apply -f deployment_arm64.yaml                                                                                         12:38:11 AM
+deployment.apps/nginx-arm64 created
+
+
+
+# Validation
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl get nodes                                                                                                                           12:38:19 AM
+NAME                            STATUS   ROLES    AGE     VERSION
+ip-172-31-21-230.ec2.internal   Ready    <none>   2m53s   v1.30.2-eks-1552ad0
+ip-172-31-22-176.ec2.internal   Ready    <none>   3m9s    v1.30.2-eks-1552ad0
+ip-172-31-24-51.ec2.internal    Ready    <none>   24s     v1.30.2-eks-1552ad0
+ip-172-31-25-153.ec2.internal   Ready    <none>   3h26m   v1.30.2-eks-1552ad0
+ip-172-31-40-118.ec2.internal   Ready    <none>   3h26m   v1.30.2-eks-1552ad0
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl describe node ip-172-31-24-51.ec2.internal | grep arch                                                                              12:39:46 AM
+Labels:             beta.kubernetes.io/arch=arm64
+                    kubernetes.io/arch=arm64
+  Kernel Version:             6.1.102-108.177.amzn2023.aarch64
+
+
+
+# Deleting AMD64
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter delete deployment nginx-amd64                                                                                          12:40:38 AM
+deployment.apps "nginx-amd64" deleted
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl get nodes                                                                                                                           12:41:05 AM
+NAME                            STATUS   ROLES    AGE     VERSION
+ip-172-31-24-51.ec2.internal    Ready    <none>   3m21s   v1.30.2-eks-1552ad0
+ip-172-31-25-153.ec2.internal   Ready    <none>   3h29m   v1.30.2-eks-1552ad0
+ip-172-31-40-118.ec2.internal   Ready    <none>   3h29m   v1.30.2-eks-1552ad0
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter get all | grep nginx-amd64                                                                                             12:42:43 AM
+
+
+
+# Deleting ARM64
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter delete deployment nginx-arm64                                                                                          12:43:03 AM
+deployment.apps "nginx-arm64" deleted
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter get all | grep nginx-arm64                                                                                             12:43:15 AM
+~/Downloads/git_projects/DevOps/aws-eks-karpenter-terraform/tf/envs/dev/manifests ❯ kubectl -n karpenter get all                                                                                                                12:44:27 AM
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/karpenter-766999d6f6-bxstr   1/1     Running   0          12m
+pod/karpenter-766999d6f6-xqn2f   1/1     Running   0          12m
+
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/karpenter   ClusterIP   10.100.62.218   <none>        8000/TCP   4h17m
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/karpenter   2/2     2            2           4h17m
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/karpenter-744d54bdc7   0         0         0       4h17m
+replicaset.apps/karpenter-766999d6f6   2         2         2       12m
