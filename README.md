@@ -10,10 +10,11 @@ This repository provides a Terraform setup to deploy Karpenter, an open-source n
 1. __Terraform:__ Ensure you have Terraform installed on your machine. The configuration is tested with Terraform version >= 1.6.5.
 2. __AWS CLI:__ Install and configure the latest version of the AWS CLI.
 3. __Kubectl:__ Install kubectl and configure it to interact with your EKS cluster.
+4. __Configured existing VPC:__ I recommend having VPC Endpoints for ec2, ecr, ssm, sqs. This allows resources in the VPC to communicate with AWS services without needing to traverse the internet.
 
 ### Configuration
 
-Before running Terraform in the us-east-1, you need to configure certain variables in the terraform.tfvars. Below are the variables you should be aware of:
+Before running Terraform in the us-east-1, you will need to configure certain variables in the terraform.tfvars. Below are the variables you should be aware of:
 
   `aws_account_id:` Your AWS account ID.  
   `region:` The AWS region where you want to deploy the resources (e.g., us-east-1).  
