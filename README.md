@@ -23,6 +23,7 @@ Before running Terraform in the us-east-1, you need to configure certain variabl
   `private_subnets:` A list of private subnet IDs in the VPC where the resources will be deployed.  
   `tags:` A map of tags to apply to all resources. 
   `admin_username:` The username for admin access to the resources.  
+  `eks_public_access_cidr:`: The CIDR ranges from which connections are allowed to the EKS cluster.
   `karpenter_chart_version:` The version of the Karpenter Helm chart to deploy (e.g., 0.37.0).  
 
 For running Terraform in the manifests directory, you need to configure the following variables in the terraform.tfvars:
@@ -121,15 +122,16 @@ spec:
 
 ### How to Validate
 
-1. __Check Node Pools:__ After deploying the Karpenter configuration, use kubectl to verify that the NodePools are correctly set up:  
+1. __Check Node Pools:__ After deploying the Karpenter configuration, use kubectl to verify that the NodePools are correctly set up. Note that EC2NodeClass needs a few minutes to detect the subnets and security group.   
       `kubectl -n karpenter get nodepools.karpenter.sh`
 
-2. __Deploy Pods:__ Apply the deployment YAMLs for x86 and ARM architectures and verify that the pods are scheduled on the correct instance types.  
+2. __Deploy Pods:__ Apply the deployment YAMLs for x86 and ARM architectures and verify that the pods are scheduled on the correct instance types. From the manifests directory do the following:  
       `kubectl apply -f deployment_amd64.yaml`  
       `kubectl apply -f deployment_arm64.yaml`  
 
 3. __Verify Pods:__ Check that the pods are running on the appropriate architecture:  
       `kubectl get pods -o wide` 
+      `kubectl describe pod/{pod_name}`
 
 
 ### Troubleshooting
