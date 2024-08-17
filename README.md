@@ -7,10 +7,10 @@ This repository provides a Terraform setup to deploy Karpenter, an open-source n
 
 ### Prerequisites
 
-1. __Terraform:__ Ensure you have Terraform installed on your machine. The configuration is tested with Terraform version >= 1.6.5.
-2. __AWS CLI:__ Install and configure the latest version of the AWS CLI.
-3. __Kubectl:__ Install kubectl and configure it to interact with your EKS cluster.
-4. __Configured existing VPC:__ I recommend having VPC Endpoints for ec2, ssm, sqs. This allows resources in the VPC to communicate with AWS services without needing to traverse the internet.
+1. __Terraform:__ Ensure you have Terraform installed on your machine. The configuration is tested with Terraform version >= 1.6.5.  
+2. __AWS CLI:__ Install and configure the latest version of the AWS CLI.  
+3. __Kubectl:__ Install kubectl and configure it to interact with your EKS cluster.  
+4. __Configured existing VPC:__ I recommend having VPC Endpoints for ec2, ssm, sqs. This allows resources in the VPC to communicate with AWS services without needing to traverse the internet.  
 
 ### Configuration
 
@@ -37,19 +37,19 @@ For running Terraform in the __manifests__ directory, you need to configure the 
 
 ### How to Deploy
 
-1. __Initialize Terraform:__ Run terraform init in the __us-east-1__ project to initialize the working directory containing Terraform configuration files that will deploy EKS and Karpenter.
-2. __Plan the Deployment:__ Use a terraform plan to see the changes.
-3. __Apply the Configuration:__ Deploy the resources by running terraform apply. This will:
-  • Deploy the AWS EKS Cluster module and all necessary related resources.
-    - Module reference: https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/examples/eks-managed-node-group
-  • Deploy the AWS Karpenter module and prepare the resources for the helm Karpenter chart.
-    - Module reference: https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/examples/karpenter?tab=outputs
-  • Deploy the Karpenter Helm chart in your EKS cluster using the helm provider.
-    - Chart reference: https://github.com/aws/karpenter-provider-aws/tree/main/charts/karpenter
-4. __Connect to the EKS cluster:__ `aws eks --region us-east-1 update-kubeconfig --name dev-eks-cluster --profile ${aws_profile}`
-5. __Use the Outputs:__ Extract the values for the eks_cluster_name and karpenter_node_iam_role_name variable in the manifest directory. Values should be same unless the environment parameter is different. 
-6. __Initialize Terraform:__ Navigate to the directory __manifests__. Initialize the terraform and apply the deployment. This will: 
-  • Set up the EC2NodeClass and NodePools for both amd64 and arm64 architectures using kubernetes_manifest resource from the kubernetes terraform provider.
+1. __Initialize Terraform:__ Run terraform init in the __us-east-1__ project to initialize the working directory containing Terraform configuration files that will deploy EKS and Karpenter.  
+2. __Plan the Deployment:__ Use a terraform plan to see the changes.  
+3. __Apply the Configuration:__ Deploy the resources by running terraform apply. This will:  
+  - Deploy the AWS EKS Cluster module and all necessary related resources.  
+    - Module reference: https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/examples/eks-managed-node-group  
+  - Deploy the AWS Karpenter module and prepare the resources for the helm Karpenter chart.  
+    - Module reference: https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/examples/karpenter?tab=outputs  
+  - Deploy the Karpenter Helm chart in your EKS cluster using the helm provider.  
+    - Chart reference: https://github.com/aws/karpenter-provider-aws/tree/main/charts/karpenter  
+4. __Connect to the EKS cluster:__ `aws eks --region us-east-1 update-kubeconfig --name dev-eks-cluster --profile ${aws_profile}`  
+5. __Use the Outputs:__ Extract the values for the eks_cluster_name and karpenter_node_iam_role_name variable in the manifest directory. Values should be same unless the environment parameter is different.  
+6. __Initialize Terraform:__ Navigate to the directory __manifests__. Initialize the terraform and apply the deployment. This will:  
+  • Set up the EC2NodeClass and NodePools for both amd64 and arm64 architectures using kubernetes_manifest resource from the kubernetes terraform provider.  
 
 ### Notes: 
 
@@ -129,17 +129,17 @@ spec:
 
 ### How to Validate
 
-1. __Check NodePools and NodeClasses:__ After deploying the Karpenter configuration, use kubectl to verify that the NodePools are correctly set up. Note that EC2NodeClass needs a few minutes to detect the subnets and security group. Once the subnets and security group ids are identified in the output of the ec2nodeclass manifest, these resources are validated. 
-      `kubectl -n karpenter get ec2nodeclasses.karpenter.k8s.aws default -o yaml`   
-      `kubectl -n karpenter get nodepools.karpenter.sh`
+1. __Check NodePools and NodeClasses:__ After deploying the Karpenter configuration, use kubectl to verify that the NodePools are correctly set up. Note that EC2NodeClass needs a few minutes to detect the subnets and security group. Once the subnets and security group ids are identified in the output of the ec2nodeclass manifest, these resources are validated.  
+      `kubectl -n karpenter get ec2nodeclasses.karpenter.k8s.aws default -o yaml`  
+      `kubectl -n karpenter get nodepools.karpenter.sh`  
 
 2. __Deploy Pods:__ Apply the deployment YAMLs for x86 and ARM architectures and verify that the pods are scheduled on the correct instance types. From the __manifests__ directory do the following:  
       `kubectl apply -f deployment_amd64.yaml`  
       `kubectl apply -f deployment_arm64.yaml`  
 
 3. __Verify Pods:__ Check that the pods are running on the appropriate architecture by describe the node:  
-      `kubectl get pods -o wide` 
-      `kubectl describe node ${ip}.ec2.internal | grep 'arch'`
+      `kubectl get pods -o wide`  
+      `kubectl describe node ${ip}.ec2.internal | grep 'arch'`  
 
 ### Troubleshooting
 
